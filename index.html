@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    #result {
+      min-height: 200px;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 1rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Speech to Text Converter</h1>
+  <button id="startButton">Start Recording</button>
+  <div id="result"></div>
+  <div class="status" id="status"></div>
+
+  <script>
+    const startButton = document.getElementById('startButton');
+    const result = document.getElementById('result');
+    const status = document.getElementById('status');
+
+    // Check browser support
+    if (!('webkitSpeechRecognition' in window)) {
+      alert('Speech recognition is not supported in this browser. Please use Chrome.');
+      startButton.disabled = true;
+    }
+
+    const recognition = new webkitSpeechRecognition();
+    window.SpeechRecognition = window.webkitSpeechRecognition;
+    const a = new SpeechRecognition();
+    console.log('recognition', recognition, a);
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    let isRecording = false;
+
+    startButton.addEventListener('click', () => {
+      if (!isRecording) {
+        recognition.start();
+        startButton.textContent = 'Stop Recording';
+        status.textContent = 'Recording...';
+      } else {
+        recognition.stop();
+        startButton.textContent = 'Start Recording';
+        status.textContent = 'Stopped';
+      }
+      isRecording = !isRecording;
+    });
+
+    recognition.onresult = (event) => {
+      let finalTranscript = '';
+      let interimTranscript = '';
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      result.innerHTML = finalTranscript +
+        '<span style="color: #666;">' + interimTranscript + '</span>';
+    };
+
+    recognition.onerror = (event) => {
+      status.textContent = 'Error: ' + event.error;
+    };
+
+    recognition.onend = () => {
+      if (isRecording) {
+        recognition.start();
+      }
+    };
+  </script>
+</body>
+
+</html>
