@@ -14,7 +14,7 @@ A lightweight web application that converts speech to text in real-time using th
 
 ## Demo
 
-Access the live demo: [Your-Deployment-URL-Here]
+Access the live demo: https://speech-to-text-coral-six.vercel.app/
 
 ## Requirements
 
@@ -25,7 +25,7 @@ Access the live demo: [Your-Deployment-URL-Here]
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/speech-to-text.git
+git clone https://github.com/vatsalbudhbhatti/speech-to-text.git
 ```
 
 2. Navigate to project directory:
@@ -34,24 +34,6 @@ cd speech-to-text
 ```
 
 3. Open `index.html` in your web browser
-
-## Deployment Options
-
-### GitHub Pages
-1. Create a new repository
-2. Push code to repository
-3. Enable GitHub Pages in Settings > Pages
-4. Access at `yourusername.github.io/repository-name`
-
-### Netlify
-1. Sign up at netlify.com
-2. Drag and drop project folder
-3. Access via provided URL
-
-### Vercel
-1. Sign up at vercel.com
-2. Import project
-3. Deploy automatically
 
 ## Browser Support
 
